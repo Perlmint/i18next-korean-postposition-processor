@@ -1,0 +1,1 @@
+# i18next-korean-postposition-processor
