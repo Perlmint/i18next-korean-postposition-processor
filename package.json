@@ -1,0 +1,36 @@
+{
+  "name": "i18next-korean-postposition-processor",
+  "version": "0.1.0",
+  "description": "korean postposition postprocessor for i18next",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Perlmint/i18next-korean-postposition-processor.git"
+  },
+  "keywords": [
+    "i18next",
+    "korean",
+    "postposition"
+  ],
+  "author": "Gyusun Yeom",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Perlmint/i18next-korean-postposition-processor/issues"
+  },
+  "homepage": "https://github.com/Perlmint/i18next-korean-postposition-processor#readme",
+  "dependencies": {
+    "@types/i18next": "^8.4.2",
+    "typescript": "^2.6.1"
+  },
+  "peerDependencies": {
+    "i18next": "^8.4.0"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "README.md"
+  ]
+}
