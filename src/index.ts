@@ -12,7 +12,7 @@ export default {
     type: 'postProcessor',
 
     process(value: string /*, key: string, options: any*/ ) {
-        const matches = value.match(/(?:[가-힣]|[0-9]+)\[\[(?:을|를|이|가|은|는|(?:으로)|로|과|와)\]\]/g);
+        const matches = value.match(/(?:[가-힣]|[0-9]+)\(*\)*\[\[(?:을|를|이|가|은|는|(?:으로)|로|과|와)\]\]/g);
         if (matches == null) {
             return value;
         }
