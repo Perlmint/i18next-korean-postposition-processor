@@ -54,7 +54,8 @@
       "coverage"
     ],
     "reporter": [
-      "html"
+      "html",
+      "text"
     ],
     "all": true  
   }
