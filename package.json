@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc -p src",
     "test": "cross-env TS_NODE_PROJECT=test nyc mocha --compilers ts:ts-node/register",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prepublish": "npm test && npm run build"
   },
   "repository": {
