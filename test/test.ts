@@ -1,6 +1,6 @@
 import "mocha";
 import { assert } from "chai";
-import processor from "../src";
+import processor, { appendTester, removeTester } from "../src";
 const process = processor.process;
 
 describe("basic replacement test", () => {
@@ -11,6 +11,27 @@ describe("basic replacement test", () => {
     it("fallback", () => {
         assert.equal(process("哈[[는]]"), "哈는");
         assert.equal(process("哈[[은]]"), "哈은");
+    });
+
+    it("custom tester", () => {
+        const thinkingFaceTester = (str: string) => {
+            return str === "🤔";
+        };
+        assert.equal(process("🤔[[가]]"), "🤔가");
+        appendTester(thinkingFaceTester);
+        assert.equal(process("🤔[[가]]"), "🤔이");
+        removeTester(thinkingFaceTester);
+        assert.equal(process("🤔[[가]]"), "🤔가");
+
+        const overrideTester = (str: string) => {
+            return str === "1" ? false : undefined;
+        };
+        assert.equal(process("1[[가]]"), "1이");
+        appendTester(overrideTester);
+        assert.equal(process("1[[가]]"), "1이");
+        appendTester(overrideTester, true);
+        assert.equal(process("1[[가]]"), "1가");
+        removeTester(overrideTester);
     });
 
     it("이/가", () => {

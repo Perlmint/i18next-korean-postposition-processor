@@ -27,6 +27,13 @@ export function appendTester(tester: Tester, prior = false) {
     }
 }
 
+export function removeTester(tester: Tester) {
+    const found = tests.indexOf(tester);
+    if (found !== -1) {
+        tests.splice(found, 1);
+    }
+}
+
 function runTests(prevPart: string, postPosition: string) {
     let existFinal = PostPositionMap[postPosition].indexOf(postPosition) === 0;
     for (const test of tests) {
