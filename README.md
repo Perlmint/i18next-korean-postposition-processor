@@ -1,4 +1,8 @@
-[![Build Status](https://travis-ci.org/Perlmint/i18next-korean-postposition-processor.svg?branch=master)](https://travis-ci.org/Perlmint/i18next-korean-postposition-processor)[![Coverage Status](https://coveralls.io/repos/github/Perlmint/i18next-korean-postposition-processor/badge.svg?branch=master)](https://coveralls.io/github/Perlmint/i18next-korean-postposition-processor?branch=master)[![dependencies Status](https://david-dm.org/perlmint/i18next-korean-postposition-processor/status.svg)](https://david-dm.org/perlmint/i18next-korean-postposition-processor)
+[![Build Status](https://travis-ci.org/Perlmint/i18next-korean-postposition-processor.svg?branch=master)](https://travis-ci.org/Perlmint/i18next-korean-postposition-processor)
+[![Coverage Status](https://coveralls.io/repos/github/Perlmint/i18next-korean-postposition-processor/badge.svg?branch=master)](https://coveralls.io/github/Perlmint/i18next-korean-postposition-processor?branch=master)
+[![dependencies Status](https://david-dm.org/perlmint/i18next-korean-postposition-processor/status.svg)](https://david-dm.org/perlmint/i18next-korean-postposition-processor)
+[![devDependencies Status](https://david-dm.org/perlmint/i18next-korean-postposition-processor/dev-status.svg)](https://david-dm.org/perlmint/i18next-korean-postposition-processor?type=dev)
+[![peerDependencies Status](https://david-dm.org/perlmint/i18next-korean-postposition-processor/peer-status.svg)](https://david-dm.org/perlmint/i18next-korean-postposition-processor?type=peer)
 # i18next-korean-postposition-processor
 
 i18next post-processor for processing korean postposition - `을/를`, `이/가`, `은/는`, `으로/로`, `과/와`.
