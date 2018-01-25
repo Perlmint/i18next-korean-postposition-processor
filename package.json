@@ -1,6 +1,6 @@
 {
   "name": "i18next-korean-postposition-processor",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "korean postposition postprocessor for i18next",
   "main": "index.js",
   "scripts": {
@@ -60,6 +60,6 @@
       "html",
       "text"
     ],
-    "all": true  
+    "all": true
   }
 }
