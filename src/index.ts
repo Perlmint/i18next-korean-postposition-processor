@@ -6,12 +6,26 @@ import TestKana from "./kana";
 // boolean - found
 // null - hit! undecidable -> use fallback
 // undefined - no hit! -> next!
-type Tester = (str: string) => boolean | null | undefined;
+export type Tester = (str: string) => boolean | null | undefined;
 const tests: Tester[] = [
     TestHangul,
     TestNumber,
     TestKana,
 ];
+
+export function appendTester(tester: Tester, prior = false) {
+    const found = tests.indexOf(tester);
+    if (prior) {
+        if (found !== -1) {
+            tests.splice(found, 1);
+        }
+        tests.unshift(tester);
+    } else {
+        if (found === -1) {
+            tests.push(tester);
+        }
+    }
+}
 
 export default {
     name: "korean-postposition",
