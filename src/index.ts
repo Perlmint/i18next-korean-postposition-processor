@@ -1,34 +1,42 @@
 // [exist-final, non-exist-final]
-const maps: [string, string][] = [
+const postpostions: [string, string][] = [
     ["을", "를"],
     ["이", "가"],
     ["은", "는"],
     ["으로", "로"],
     ["과", "와"]
 ];
+const postPositionMap: {[key: string]: [string, string]} = {};
+for (const val of postpostions) {
+    postPositionMap[val[0]] = val;
+    postPositionMap[val[1]] = val;
+}
 
 export default {
     name: 'korean-postposition',
     type: 'postProcessor',
 
     process(value: string /*, key: string, options: any*/ ) {
-        const matches = value.match(/(?:[가-힣]|[0-9]+)\(*\)*\[\[(?:을|를|이|가|은|는|(?:으로)|로|과|와)\]\]/g);
-        if (matches == null) {
-            return value;
-        }
+        const regex = /\[\[(?:을|를|이|가|은|는|(?:으로)|로|과|와)\]\]/g;
+        let lastIndex = 0;
+        let ret: string[] = [];
+        do {
+            const matches = regex.exec(value);
+            if (matches == null) {
+                break;
+            }
 
-        for (const match of matches) {
-            const pieces = match.split("[[");
-            const pre = pieces[0];
-            let postposition = pieces[1].replace("[[", "").replace("]]", "");
+            const prevPart = value.substring(lastIndex, matches.index);
+            ret.push(prevPart);
+            let postPosition = matches[0].replace("[[", "").replace("]]", "");
             let existFinal: boolean;
-            const preCode = pre.charCodeAt(0);
+            const preCode = value.charCodeAt(matches.index - 1);
             if (preCode >= 44032) {
                 const final = (preCode - 44032) % 28;
                 existFinal = final !== 0;
             } else {
                 // number
-                const lastCh = pre[pre.length - 1];
+                const lastCh = value[matches.index - 1];
                 switch (lastCh) {
                     case "1":
                     case "3":
@@ -44,7 +52,7 @@ export default {
                         existFinal = false;
                         break;
                     default:
-                        const matched = pre.match(/0+$/) as RegExpMatchArray;
+                        const matched = prevPart.match(/0+$/)!;
                         const zeroLength = matched[0].length;
                         // 12 - 조, 20 - 해, 24 - 자, 32 - 구, 44 - 재, >=52 - 항하사, 아승기, 나유타, 불가사의, 무량대수
                         if (zeroLength === 12 || zeroLength === 20 || zeroLength == 24 || zeroLength === 32 || zeroLength == 44 || zeroLength >= 52) {
@@ -56,16 +64,13 @@ export default {
                 }
             }
 
-            for (const item of maps) {
-                if (item.indexOf(postposition) === -1) {
-                    continue;
-                }
-
-                value = value.replace(match, `${pre}${existFinal ? item[0] : item[1]}`);
-                break;
-            }
+            ret.push(postPositionMap[postPosition][existFinal ? 0 : 1]);
+            lastIndex = matches.index + matches[0].length;
+        } while (true);
+        if (lastIndex != value.length) {
+            ret.push(value.substring(lastIndex));
         }
 
-        return value;
+        return ret.join("");
     }
 };
