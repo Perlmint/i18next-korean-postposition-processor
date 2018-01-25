@@ -8,6 +8,11 @@ describe('basic replacement test', () => {
         assert.equal(process('마음속에 찰랑이는 맑고 고운 말 한마디'), '마음속에 찰랑이는 맑고 고운 말 한마디');
     });
 
+    it('fallback', () => {
+        assert.equal(process('哈[[는]]'), '哈는');
+        assert.equal(process('哈[[은]]'), '哈은');
+    });
+
     it('이/가', () => {
         assert.equal(process('자체[[가]]'), '자체가');
         assert.equal(process('사고방식[[가]]'), '사고방식이');
@@ -61,5 +66,8 @@ describe('basic replacement test', () => {
         assert.equal(process('2[[은]]'), '2는');
         assert.equal(process('1[[은]]'), '1은');
         assert.equal(process('1000000000000[[은]]'), '1000000000000는');
+        assert.equal(process('1,000,000,000,000[[은]]'), '1,000,000,000,000는');
+        assert.equal(process('1000.000[[는]]'), '1000.000은');
+        assert.equal(process('99.990[[는]]'), '99.990은');
     });
 });
