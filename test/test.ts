@@ -96,4 +96,11 @@ describe("basic replacement test", () => {
         assert.equal(process("さくら[[이]]"), "さくら가");
         assert.equal(process("パソコン[[이]]"), "パソコン이");
     });
+
+    it("ignore parenthesis", () => {
+        // there is no text before paren, use text in the paren.
+        assert.equal(process("(자살각)[[가]]"), "(자살각)이");
+        // commonly ignore contents in paren.
+        assert.equal(process("니체(독일의 철학자)[[은]] 이렇게 말했다."), "니체(독일의 철학자)는 이렇게 말했다.");
+    });
 });

@@ -2,6 +2,7 @@ import { PostPositionMap } from "./consts";
 import TestHangul from "./hangul";
 import TestNumber from "./number";
 import TestKana from "./kana";
+import ParenthesisModifier from "./modifiers/parenthesis";
 
 // boolean - found
 // null - hit! undecidable -> use fallback
@@ -11,6 +12,11 @@ const tests: Tester[] = [
     TestHangul,
     TestNumber,
     TestKana,
+];
+
+export type Modifier = (str: string) => string;
+const modifiers: Modifier[] = [
+    ParenthesisModifier
 ];
 
 export function appendTester(tester: Tester, prior = false) {
@@ -35,6 +41,7 @@ export function removeTester(tester: Tester) {
 }
 
 function runTests(prevPart: string, postPosition: string) {
+    prevPart = applyModifiers(prevPart);
     let existFinal = PostPositionMap[postPosition].indexOf(postPosition) === 0;
     for (const test of tests) {
         const testResult = test(prevPart);
@@ -49,6 +56,14 @@ function runTests(prevPart: string, postPosition: string) {
     }
 
     return existFinal;
+}
+
+function applyModifiers(prevPart: string) {
+    for (const modifier of modifiers) {
+        prevPart = modifier(prevPart);
+    }
+
+    return prevPart;
 }
 
 export default {
