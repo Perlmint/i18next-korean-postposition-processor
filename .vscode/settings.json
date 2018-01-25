@@ -12,5 +12,7 @@
         "*.d.ts": true,
         "*.js.map": true,
         "*.tgz": true,
+        "modifiers": true,
+        "testers": true,
     }
 }

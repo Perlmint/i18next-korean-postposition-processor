@@ -60,3 +60,6 @@ typings/
 /*.js
 /*.js.map
 /*.d.ts
+
+modifiers/
+testers/
