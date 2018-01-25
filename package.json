@@ -30,8 +30,8 @@
     "i18next": "^8.4.0 || ^9.0.0 || ^10.0.0"
   },
   "files": [
-    "index.js",
-    "index.d.ts",
+    "*.js",
+    "*.d.ts",
     "README.md"
   ],
   "devDependencies": {
