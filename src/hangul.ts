@@ -6,5 +6,5 @@ export default function TestHangul(str: string) {
         return final !== 0;
     }
 
-    return null;
+    return undefined;
 }

@@ -15,7 +15,7 @@ export default function TestNumber(str: string) {
         case "0":
             break;
         default:
-            return null;
+            return undefined;
     }
 
     let zeroContinued = true;

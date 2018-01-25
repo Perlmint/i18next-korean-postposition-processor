@@ -2,7 +2,10 @@ import { PostPositionMap } from "./consts";
 import TestHangul from "./hangul";
 import TestNumber from "./number";
 
-type Tester = (str: string) => boolean | null;
+// boolean - found
+// null - hit! undecidable -> use fallback
+// undefined - no hit! -> next!
+type Tester = (str: string) => boolean | null | undefined;
 const tests: Tester[] = [
     TestHangul,
     TestNumber,
@@ -29,8 +32,12 @@ export default {
             let existFinal = PostPositionMap[postPosition].indexOf(postPosition) === 0;
             for (const test of tests) {
                 const testResult = test(prevPart);
-                if (testResult !== null) {
-                    existFinal = testResult;
+                if (testResult === undefined) {
+                    continue;
+                } else {
+                    if (testResult !== null) {
+                        existFinal = testResult;
+                    }
                     break;
                 }
             }
