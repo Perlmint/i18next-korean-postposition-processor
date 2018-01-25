@@ -1,6 +1,7 @@
 import { PostPositionMap } from "./consts";
 import TestHangul from "./hangul";
 import TestNumber from "./number";
+import TestKana from "./kana";
 
 // boolean - found
 // null - hit! undecidable -> use fallback
@@ -9,6 +10,7 @@ type Tester = (str: string) => boolean | null | undefined;
 const tests: Tester[] = [
     TestHangul,
     TestNumber,
+    TestKana,
 ];
 
 export default {

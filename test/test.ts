@@ -70,4 +70,9 @@ describe('basic replacement test', () => {
         assert.equal(process('1000.000[[는]]'), '1000.000은');
         assert.equal(process('99.990[[는]]'), '99.990은');
     });
+
+    it('kana', () => {
+        assert.equal(process('さくら[[이]]'), 'さくら가');
+        assert.equal(process('パソコン[[이]]'), 'パソコン이');
+    });
 });
