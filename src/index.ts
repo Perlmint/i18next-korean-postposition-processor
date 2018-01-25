@@ -27,6 +27,23 @@ export function appendTester(tester: Tester, prior = false) {
     }
 }
 
+function runTests(prevPart: string, postPosition: string) {
+    let existFinal = PostPositionMap[postPosition].indexOf(postPosition) === 0;
+    for (const test of tests) {
+        const testResult = test(prevPart);
+        if (testResult === undefined) {
+            continue;
+        } else {
+            if (testResult !== null) {
+                existFinal = testResult;
+            }
+            break;
+        }
+    }
+
+    return existFinal;
+}
+
 export default {
     name: "korean-postposition",
     type: "postProcessor",
@@ -45,18 +62,7 @@ export default {
             ret.push(prevPart);
             const postPosition = matches[0].replace("[[", "").replace("]]", "");
             // default value - template input
-            let existFinal = PostPositionMap[postPosition].indexOf(postPosition) === 0;
-            for (const test of tests) {
-                const testResult = test(prevPart);
-                if (testResult === undefined) {
-                    continue;
-                } else {
-                    if (testResult !== null) {
-                        existFinal = testResult;
-                    }
-                    break;
-                }
-            }
+            const existFinal = runTests(prevPart, postPosition);
 
             ret.push(PostPositionMap[postPosition][existFinal ? 0 : 1]);
             lastIndex = matches.index + matches[0].length;
