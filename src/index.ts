@@ -1,7 +1,7 @@
 import { PostPositionMap } from "./consts";
-import TestHangul from "./hangul";
-import TestNumber from "./number";
-import TestKana from "./kana";
+import TestHangul from "./testers/hangul";
+import TestNumber from "./testers/number";
+import TestKana from "./testers/kana";
 import ParenthesisModifier from "./modifiers/parenthesis";
 
 // boolean - found
