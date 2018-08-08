@@ -6,6 +6,7 @@ const postpostions: PostPositionPair[] = [
     ["은", "는"],
     ["으로", "로"],
     ["과", "와"],
+    ["이랑", "랑"],
 ];
 
 const PostPositionMap: {[key: string]: [string, string]} = {};
