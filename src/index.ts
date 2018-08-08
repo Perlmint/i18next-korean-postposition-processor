@@ -71,7 +71,7 @@ export default {
     type: "postProcessor",
 
     process(value: string /*, key: string, options: any*/ ) {
-        const regex = /\[\[(?:을|를|이|가|은|는|(?:으로)|로|과|와)\]\]/g;
+        const regex = /\[\[(?:을|를|이|가|은|는|(?:으로)|로|과|와|(?:이랑)|랑)\]\]/g;
         let lastIndex = 0;
         const ret: string[] = [];
         do {
