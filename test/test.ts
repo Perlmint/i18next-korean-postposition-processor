@@ -74,6 +74,14 @@ describe("basic replacement test", () => {
         assert.equal(process("자연[[과]]"), "자연과");
     });
 
+    it("이랑/랑", () => {
+        assert.equal(process("파랑새[[이랑]]"), "파랑새랑");
+        assert.equal(process("밥[[이랑]]"), "밥이랑");
+
+        assert.equal(process("책상[[랑]]"), "책상이랑");
+        assert.equal(process("의자[[랑]]"), "의자랑");
+    });
+
     it("multiple", () => {
         assert.equal(process("햇빛[[가]] 선명하게 나뭇잎[[를]] 핥고 있었다"), "햇빛이 선명하게 나뭇잎을 핥고 있었다");
         assert.equal(process("꽃씨들[[은]] 흙[[을]] 뚫고 얼음[[을]] 뚫고"), "꽃씨들은 흙을 뚫고 얼음을 뚫고");
