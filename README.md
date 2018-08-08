@@ -7,7 +7,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/b3f55bc82a9eafed4bf7/maintainability)](https://codeclimate.com/github/Perlmint/i18next-korean-postposition-processor/maintainability)
 # i18next-korean-postposition-processor
 
-i18next post-processor for processing korean postposition - `을/를`, `이/가`, `은/는`, `으로/로`, `과/와`.
+i18next post-processor for processing korean postposition - `을/를`, `이/가`, `은/는`, `으로/로`, `과/와`, `이랑/랑`.
 
 This processor can handle korean character or arabic number(without decimal mark).
 
