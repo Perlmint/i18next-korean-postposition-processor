@@ -16,7 +16,7 @@ const tests: Tester[] = [
 
 export type Modifier = (str: string) => string;
 const modifiers: Modifier[] = [
-    ParenthesisModifier
+    ParenthesisModifier,
 ];
 
 export function appendTester(tester: Tester, prior = false) {
@@ -37,6 +37,27 @@ export function removeTester(tester: Tester) {
     const found = tests.indexOf(tester);
     if (found !== -1) {
         tests.splice(found, 1);
+    }
+}
+
+export function appendModifier(modifier: Modifier, prior = false) {
+    const found = modifiers.indexOf(modifier);
+    if (prior) {
+        if (found !== -1) {
+            modifiers.splice(found, 1);
+        }
+        modifiers.unshift(modifier);
+    } else {
+        if (found === -1) {
+            modifiers.push(modifier);
+        }
+    }
+}
+
+export function removeModifier(modifier: Modifier) {
+    const found = modifiers.indexOf(modifier);
+    if (found !== -1) {
+        modifiers.splice(found, 1);
     }
 }
 
