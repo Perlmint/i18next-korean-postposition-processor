@@ -1,6 +1,7 @@
 import "mocha";
 import { assert } from "chai";
-import processor, { appendTester, removeTester } from "../src";
+import processor, { appendModifier, appendTester, removeModifier, removeTester } from "../src";
+import * as stripTags from "striptags";
 const process = processor.process;
 
 describe("basic replacement test", () => {
@@ -32,6 +33,27 @@ describe("basic replacement test", () => {
         appendTester(overrideTester, true);
         assert.equal(process("1[[가]]"), "1가");
         removeTester(overrideTester);
+    });
+
+    it("custom modifier", () => {
+        const htmlModifier = (str: string) => {
+            return stripTags(str);
+        };
+        assert.equal(process("<b>레드벨벳</b>[[가]]"), "<b>레드벨벳</b>가");
+        appendModifier(htmlModifier);
+        assert.equal(process("<b>레드벨벳</b>[[가]]"), "<b>레드벨벳</b>이");
+        removeModifier(htmlModifier);
+        assert.equal(process("<b>레드벨벳</b>[[가]]"), "<b>레드벨벳</b>가");
+
+        const overrideModifier = (str: string) => {
+            return str.replace(/['"]$/, "");
+        };
+        assert.equal(process("'아이린(레드벨벳)'[[가]]"), "'아이린(레드벨벳)'가");
+        appendModifier(overrideModifier);
+        assert.equal(process("'아이린(레드벨벳)'[[가]]"), "'아이린(레드벨벳)'가");
+        appendModifier(overrideModifier, true);
+        assert.equal(process("'아이린(레드벨벳)'[[가]]"), "'아이린(레드벨벳)'이");
+        removeModifier(overrideModifier);
     });
 
     it("이/가", () => {
