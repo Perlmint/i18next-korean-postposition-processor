@@ -16,7 +16,7 @@ const tests: Tester[] = [
 
 export type Modifier = (str: string) => string;
 const modifiers: Modifier[] = [
-    ParenthesisModifier
+    ParenthesisModifier,
 ];
 
 export function appendTester(tester: Tester, prior = false) {
