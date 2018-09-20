@@ -14,9 +14,14 @@ This processor can handle korean character or arabic number(without decimal mark
 ## Setup
 
 ```javascript
-import KoreanPostProcessor from 'i18next-korean-postposition-processor';
+import processor, { KoreanPostpositionProcessor, default_testers, default_modifiers } from 'i18next-korean-postposition-processor';
 
-i18next.use(KoreanPostProcessor);
+i18next.use(processor);
+i18next.use(new KoreanPostpositionProcessor());
+i18next.use(new KoreanPostpositionProcessor({
+    testers: [/* testers to use */, ...default_testers],
+    modifiers: [/* modifiers to use */, ...default_modifiers],
+});
 ```
 
 ## Translation text
