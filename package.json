@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p src",
-    "test": "cross-env TS_NODE_PROJECT=test nyc mocha --compilers ts:ts-node/register",
+    "test": "cross-env TS_NODE_PROJECT=test nyc mocha --require ts-node/register \"test/**/*.ts\"",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prepare": "npm test && npm run build",
     "lint": "tslint src/*.ts test/*.ts"
@@ -37,16 +37,16 @@
     "README.md"
   ],
   "devDependencies": {
-    "@types/chai": "^4.1.1",
-    "@types/i18next": "^8.4.2",
-    "@types/mocha": "^2.2.46",
+    "@types/chai": "^4.1.5",
+    "@types/i18next": "^8.4.5",
+    "@types/mocha": "^2.2.48",
     "chai": "^4.1.2",
-    "cross-env": "^5.1.3",
-    "mocha": "^5.0.0",
-    "nyc": "^11.4.1",
+    "cross-env": "^5.2.0",
+    "mocha": "^5.2.0",
+    "nyc": "^11.9.0",
     "ts-node": "^4.1.0",
-    "tslint": "^5.9.1",
-    "typescript": "^2.6.2"
+    "tslint": "^5.11.0",
+    "typescript": "^2.9.2"
   },
   "nyc": {
     "extension": [
