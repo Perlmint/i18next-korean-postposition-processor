@@ -8,69 +8,52 @@ import ParenthesisModifier from "./modifiers/parenthesis";
 // null - hit! undecidable -> use fallback
 // undefined - no hit! -> next!
 export type Tester = (str: string) => boolean | null | undefined;
-const tests: Tester[] = [
+export const default_testers: ReadonlyArray<Tester> = [
     TestHangul,
     TestNumber,
     TestKana,
 ];
 
 export type Modifier = (str: string) => string;
-const modifiers: Modifier[] = [
+export const default_modifiers: ReadonlyArray<Modifier> = [
     ParenthesisModifier
 ];
 
-export function appendTester(tester: Tester, prior = false) {
-    const found = tests.indexOf(tester);
-    if (prior) {
-        if (found !== -1) {
-            tests.splice(found, 1);
-        }
-        tests.unshift(tester);
-    } else {
-        if (found === -1) {
-            tests.push(tester);
-        }
-    }
+export interface KoreanPostpositionProcessorOption {
+    testers?: Tester[];
+    modifiers?: Modifier[];
 }
 
-export function removeTester(tester: Tester) {
-    const found = tests.indexOf(tester);
-    if (found !== -1) {
-        tests.splice(found, 1);
-    }
-}
+export class KoreanPostpositionProcessor {
+    public modifiers: Modifier[];
+    public testers: Tester[];
 
-function runTests(prevPart: string, postPosition: string) {
-    prevPart = applyModifiers(prevPart);
-    let existFinal = PostPositionMap[postPosition].indexOf(postPosition) === 0;
-    for (const test of tests) {
-        const testResult = test(prevPart);
-        if (testResult === undefined) {
-            continue;
-        } else {
-            if (testResult !== null) {
-                existFinal = testResult;
+    public constructor(option?: KoreanPostpositionProcessorOption) {
+        let modifiers = default_modifiers;
+        let testers = default_testers;
+
+        if (option !== undefined) {
+            if (option.modifiers) {
+                modifiers = option.modifiers;
             }
-            break;
+            if (option.testers) {
+                testers = option.testers;
+            }
         }
+
+        this.modifiers = [...modifiers];
+        this.testers = [...testers];
     }
 
-    return existFinal;
-}
-
-function applyModifiers(prevPart: string) {
-    for (const modifier of modifiers) {
-        prevPart = modifier(prevPart);
+    public get name() {
+        return "korean-postposition";
     }
 
-    return prevPart;
-}
+    public get type() {
+        return "postProcessor";
+    }
 
-export default {
-    name: "korean-postposition",
-    type: "postProcessor",
-
-    process(value: string /*, key: string, options: any*/ ) {
+    public process(value: string /*, key: string, options: any*/ ) {
         const regex = /\[\[(?:을|를|이|가|은|는|(?:으로)|로|과|와|(?:이랑)|랑)\]\]/g;
         let lastIndex = 0;
         const ret: string[] = [];
@@ -84,7 +67,7 @@ export default {
             ret.push(prevPart);
             const postPosition = matches[0].replace("[[", "").replace("]]", "");
             // default value - template input
-            const existFinal = runTests(prevPart, postPosition);
+            const existFinal = this.runTests(prevPart, postPosition);
 
             ret.push(PostPositionMap[postPosition][existFinal ? 0 : 1]);
             lastIndex = matches.index + matches[0].length;
@@ -94,5 +77,35 @@ export default {
         }
 
         return ret.join("");
-    },
-};
+    }
+
+    private runTests(prevPart: string, postPosition: string) {
+        prevPart = this.applyModifiers(prevPart);
+        let existFinal = PostPositionMap[postPosition].indexOf(postPosition) === 0;
+        for (const test of this.testers) {
+            const testResult = test(prevPart);
+            if (testResult === undefined) {
+                continue;
+            } else {
+                if (testResult !== null) {
+                    existFinal = testResult;
+                }
+                break;
+            }
+        }
+
+        return existFinal;
+    }
+
+    private applyModifiers(prevPart: string) {
+        for (const modifier of this.modifiers) {
+            prevPart = modifier(prevPart);
+        }
+
+        return prevPart;
+    }
+}
+
+const defaultInstance = new KoreanPostpositionProcessor();
+
+export default defaultInstance;
