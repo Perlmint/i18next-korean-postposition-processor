@@ -1,6 +1,6 @@
 import "mocha";
 import { assert } from "chai";
-import { KoreanPostpositionProcessor } from "../src";
+import { KoreanPostpositionProcessor, default_testers, default_modifiers } from "../src";
 
 describe("basic replacement test", () => {
     it("none", () => {
@@ -64,6 +64,28 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("<b>레드벨벳</b>[[가]]"), "<b>레드벨벳</b>이");
         processor.modifiers.pop();
         assert.equal(processor.process("<b>레드벨벳</b>[[가]]"), "<b>레드벨벳</b>가");
+    });
+
+    it("options", () => {
+        const processor1 = new KoreanPostpositionProcessor();
+        assert.deepEqual(processor1.testers, default_testers);
+        assert.deepEqual(processor1.modifiers, default_modifiers);
+
+        const processor2 = new KoreanPostpositionProcessor({});
+        assert.deepEqual(processor2.testers, default_testers);
+        assert.deepEqual(processor2.modifiers, default_modifiers);
+
+        const processor3 = new KoreanPostpositionProcessor({
+            testers: []
+        });
+        assert.deepEqual(processor3.testers, []);
+        assert.deepEqual(processor3.modifiers, default_modifiers);
+
+        const processor4 = new KoreanPostpositionProcessor({
+            modifiers: []
+        });
+        assert.deepEqual(processor4.testers, default_testers);
+        assert.deepEqual(processor4.modifiers, []);
     });
 
     it("이/가", () => {
