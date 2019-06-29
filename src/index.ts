@@ -16,7 +16,7 @@ export const default_testers: ReadonlyArray<Tester> = [
 
 export type Modifier = (str: string) => string;
 export const default_modifiers: ReadonlyArray<Modifier> = [
-    ParenthesisModifier
+    ParenthesisModifier,
 ];
 
 export interface KoreanPostpositionProcessorOption {

@@ -5,7 +5,9 @@
     ],
     "jsRules": {},
     "rules": {
-        "ordered-imports": false
+        "ordered-imports": false,
+        "interface-name": false,
+        "variable-name": false
     },
     "rulesDirectory": []
 }
