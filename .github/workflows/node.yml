@@ -27,7 +27,7 @@ jobs:
       run: |
         npm ci --ignore-scripts
         npm install --ignore-scripts i18next@${{ matrix.i18next-version }}
-        if [ $(echo "${{ matrix.i18next-version }} / 1" | bc -lt 13) ] then;
+        if [ $(echo "${{ matrix.i18next-version }} / 1" | bc -lt 13) ]; then
           npm install --ignore-scripts @types/i18next@${{ matrix.i18next-version }}
         fi
         npm test
