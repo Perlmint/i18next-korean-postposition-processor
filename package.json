@@ -25,7 +25,6 @@
     "url": "https://github.com/Perlmint/i18next-korean-postposition-processor/issues"
   },
   "homepage": "https://github.com/Perlmint/i18next-korean-postposition-processor#readme",
-  "dependencies": {},
   "peerDependencies": {
     "i18next": "^8.4.0 || ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0"
   },
