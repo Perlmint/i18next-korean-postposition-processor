@@ -2,21 +2,21 @@ import "mocha";
 import { assert } from "chai";
 import { KoreanPostpositionProcessor, default_testers, default_modifiers } from "../src";
 
-describe("basic replacement test", () => {
-    it("none", () => {
+describe("Postposition rocessor", () => {
+    it("should not replace non-placeholder text", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("마음속에 찰랑이는 맑고 고운 말 한마디"), "마음속에 찰랑이는 맑고 고운 말 한마디");
     });
 
-    it("fallback", () => {
+    it("should use fallback when proper postposition is not inferrerble", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("哈[[는]]"), "哈는");
         assert.equal(processor.process("哈[[은]]"), "哈은");
     });
 
-    it("custom tester", () => {
+    it("should use specified custom tester", () => {
         const processor = new KoreanPostpositionProcessor();
 
         const thinkingFaceTester = (str: string) => {
@@ -38,7 +38,7 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("1[[가]]"), "1가");
     });
 
-    it("custom modifier", () => {
+    it("should use custom modifier for inferring postposition", () => {
         const processor = new KoreanPostpositionProcessor();
 
         // simplified dummy html tag remover
@@ -66,7 +66,7 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("<b>레드벨벳</b>[[가]]"), "<b>레드벨벳</b>가");
     });
 
-    it("options", () => {
+    it("should have specified options", () => {
         const processor1 = new KoreanPostpositionProcessor();
         assert.deepEqual(processor1.testers, default_testers);
         assert.deepEqual(processor1.modifiers, default_modifiers);
@@ -88,7 +88,7 @@ describe("basic replacement test", () => {
         assert.deepEqual(processor4.modifiers, []);
     });
 
-    it("이/가", () => {
+    it("should handle 이/가 properly", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("자체[[가]]"), "자체가");
@@ -98,7 +98,7 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("모두[[이]]"), "모두가");
     });
 
-    it("은/는", () => {
+    it("should handle 은/는 properly", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("한강[[은]]"), "한강은");
@@ -108,7 +108,7 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("사진[[는]]"), "사진은");
     });
 
-    it("을/를", () => {
+    it("should handle 을/를 properly", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("몸[[을]]"), "몸을");
@@ -118,7 +118,7 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("화장지[[를]]"), "화장지를");
     });
 
-    it("으로/로", () => {
+    it("should handle 으로/로 properly", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("미술관[[으로]]"), "미술관으로");
@@ -128,7 +128,7 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("머리[[로]]"), "머리로");
     });
 
-    it("와/과", () => {
+    it("should handle 와/과 properly", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("비트코인[[와]]"), "비트코인과");
@@ -138,7 +138,7 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("자연[[과]]"), "자연과");
     });
 
-    it("이랑/랑", () => {
+    it("should handle 이랑/랑 properly", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("파랑새[[이랑]]"), "파랑새랑");
@@ -148,7 +148,7 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("의자[[랑]]"), "의자랑");
     });
 
-    it("multiple", () => {
+    it("should replace all postposition placeholders in single text", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("햇빛[[가]] 선명하게 나뭇잎[[를]] 핥고 있었다"), "햇빛이 선명하게 나뭇잎을 핥고 있었다");
@@ -158,26 +158,26 @@ describe("basic replacement test", () => {
         assert.equal(processor.process("울림[[이]] 있어야 삶[[이]] 신선하고 활기차다"), "울림이 있어야 삶이 신선하고 활기차다");
     });
 
-    it("number", () => {
+    it("should recognize arabic number and handle it in korean pronounciation", () => {
         const processor = new KoreanPostpositionProcessor();
 
-        assert.equal(processor.process("10[[이]]"), "10이");
-        assert.equal(processor.process("2[[은]]"), "2는");
-        assert.equal(processor.process("1[[은]]"), "1은");
-        assert.equal(processor.process("1000000000000[[은]]"), "1000000000000는");
-        assert.equal(processor.process("1,000,000,000,000[[은]]"), "1,000,000,000,000는");
-        assert.equal(processor.process("1000.000[[는]]"), "1000.000은");
-        assert.equal(processor.process("99.990[[는]]"), "99.990은");
+        assert.equal(processor.process("10[[이]]"), "10이"); // 십이
+        assert.equal(processor.process("2[[은]]"), "2는"); // 이는
+        assert.equal(processor.process("1[[은]]"), "1은"); // 일은
+        assert.equal(processor.process("1000000000000[[은]]"), "1000000000000는"); // 일조는
+        assert.equal(processor.process("1,000,000,000,000[[은]]"), "1,000,000,000,000는"); // 일조는
+        assert.equal(processor.process("1000.000[[는]]"), "1000.000은"); // 천점영영영은
+        assert.equal(processor.process("99.990[[는]]"), "99.990은"); // 구십구점구구영은
     });
 
-    it("kana", () => {
+    it("should handle kana characters", () => {
         const processor = new KoreanPostpositionProcessor();
 
         assert.equal(processor.process("さくら[[이]]"), "さくら가");
         assert.equal(processor.process("パソコン[[이]]"), "パソコン이");
     });
 
-    it("ignore parenthesis", () => {
+    it("should ignore parenthesis", () => {
         const processor = new KoreanPostpositionProcessor();
 
         // there is no text before paren, use text in the paren.
