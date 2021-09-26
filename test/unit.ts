@@ -76,13 +76,13 @@ describe("Postposition rocessor", () => {
         assert.deepEqual(processor2.modifiers, default_modifiers);
 
         const processor3 = new KoreanPostpositionProcessor({
-            testers: []
+            testers: [],
         });
         assert.deepEqual(processor3.testers, []);
         assert.deepEqual(processor3.modifiers, default_modifiers);
 
         const processor4 = new KoreanPostpositionProcessor({
-            modifiers: []
+            modifiers: [],
         });
         assert.deepEqual(processor4.testers, default_testers);
         assert.deepEqual(processor4.modifiers, []);
