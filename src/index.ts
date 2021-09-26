@@ -50,7 +50,7 @@ export class KoreanPostpositionProcessor {
     }
 
     public get type() {
-        return "postProcessor";
+        return "postProcessor" as const;
     }
 
     public process(value: string /*, key: string, options: any*/ ) {
